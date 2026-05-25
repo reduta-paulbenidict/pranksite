@@ -2,9 +2,14 @@ const introScene = document.querySelector('.intro-scene');
 const rickrollScene = document.querySelector('.rickroll-scene');
 const rickrollVideo = document.querySelector('.rickroll-video');
 
-const introDurationMs = 3200;
+let hasAdvanced = false;
 
-window.setTimeout(() => {
+function advanceToRickroll() {
+  if (hasAdvanced) {
+    return;
+  }
+
+  hasAdvanced = true;
   introScene.classList.add('is-hidden');
   introScene.setAttribute('aria-hidden', 'true');
   rickrollScene.classList.add('is-visible');
@@ -14,12 +19,6 @@ window.setTimeout(() => {
   rickrollVideo.play().catch(() => {
     rickrollVideo.play().catch(() => {});
   });
-}, introDurationMs);
+}
 
-window.addEventListener('pointerdown', () => {
-  if (rickrollScene.classList.contains('is-visible')) {
-    rickrollVideo.muted = false;
-    rickrollVideo.volume = 1;
-    rickrollVideo.play().catch(() => {});
-  }
-});
+introScene.addEventListener('pointerdown', advanceToRickroll, { once: true });
