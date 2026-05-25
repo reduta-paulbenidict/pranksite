@@ -1,0 +1,195 @@
+:root {
+  color-scheme: dark;
+  --bg: #07111f;
+  --bg-2: #0f1a33;
+  --panel: rgba(8, 14, 28, 0.72);
+  --panel-border: rgba(255, 255, 255, 0.1);
+  --text: #f8fbff;
+  --muted: rgba(248, 251, 255, 0.8);
+  --accent-2: #f9c74f;
+  --shadow: rgba(0, 0, 0, 0.45);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Trebuchet MS", "Verdana", "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at top, rgba(70, 119, 255, 0.22), transparent 34%),
+    linear-gradient(180deg, var(--bg-2), var(--bg));
+  color: var(--text);
+  overflow: hidden;
+}
+
+.app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: opacity 650ms ease, transform 650ms ease;
+}
+
+.scene.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(1.02);
+}
+
+.intro-scene {
+  padding: 2rem;
+  opacity: 1;
+  background:
+    radial-gradient(circle at top, rgba(70, 119, 255, 0.22), transparent 34%),
+    linear-gradient(180deg, var(--bg-2), var(--bg));
+}
+
+.amongus-image {
+  width: min(20rem, 42vw);
+  max-width: 20rem;
+  max-height: 55vh;
+  height: auto;
+  display: block;
+  opacity: 0;
+  filter: drop-shadow(0 1rem 2rem rgba(0, 0, 0, 0.45));
+  animation: fade-in-amongus 1.6s ease 0.15s forwards;
+}
+
+.rickroll-scene {
+  opacity: 0;
+  pointer-events: none;
+  background: #000;
+}
+
+.rickroll-scene.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.video-stage {
+  position: absolute;
+  inset: 0;
+}
+
+.rickroll-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 0;
+  pointer-events: none;
+  filter: saturate(1.05) contrast(1.05);
+}
+
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at center, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.66)),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.38));
+}
+
+.cta-panel {
+  position: relative;
+  z-index: 1;
+  max-width: min(48rem, calc(100vw - 2rem));
+  margin: 0 1rem 2rem;
+  padding: 1.1rem 1.3rem;
+  border-radius: 1.2rem;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 1rem 3rem var(--shadow);
+  text-align: center;
+  font-size: clamp(1rem, 2.2vw, 1.35rem);
+  line-height: 1.5;
+  opacity: 0;
+  transform: translateY(1rem) scale(0.98);
+}
+
+.cta-panel p {
+  margin: 0;
+}
+
+.cta-panel a {
+  color: var(--accent-2);
+  font-weight: 700;
+  text-decoration-thickness: 0.12em;
+  text-underline-offset: 0.15em;
+}
+
+.cta-panel a:hover {
+  color: #ffe08a;
+}
+
+.scene.is-visible .cta-panel {
+  animation: fade-in-panel 2s cubic-bezier(0.16, 1, 0.3, 1) 5s both;
+}
+
+@keyframes fade-in-amongus {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem) scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fade-in-panel {
+  from {
+    opacity: 0;
+    transform: translateY(1.2rem) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 640px) {
+  .intro-scene {
+    padding: 1.2rem;
+  }
+
+  .amongus-image {
+    width: min(16rem, 66vw);
+    max-width: 16rem;
+    max-height: 48vh;
+  }
+
+  .cta-panel {
+    margin-bottom: 1rem;
+    padding: 1rem 1rem 1.05rem;
+    border-radius: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene,
+  .amongus-image,
+  .scene.is-visible .cta-panel {
+    animation: none !important;
+    transition: none !important;
+  }
+}
